@@ -7,7 +7,22 @@
     <router-view/>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      age: 30
+    }
+  },
 
+  mounted() {
+     const url = "/activity/servicetime"
+     this.$axios.get(url).then({
+
+     })
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
