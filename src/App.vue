@@ -1,13 +1,8 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
-  </div>
 </template>
 <script>
+import storage from './storage/index'
 export default {
   data() {
     return {
@@ -16,10 +11,7 @@ export default {
   },
 
   mounted() {
-     const url = "/activity/servicetime"
-     this.$axios.get(url).then({
-
-     })
+     storage.setItem('a',1)
   }
 }
 </script>
