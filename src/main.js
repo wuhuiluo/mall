@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
+axios.defaults.baseUrl = '/api'
+axios.defaults.timeout = 8000
+
+// 响应拦截
 axios.interceptors.response.use(response => {
   let res = response.data
   if (res.status === 0) {
