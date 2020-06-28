@@ -3,13 +3,13 @@ module.exports = {
         host: 'localhost',
         port: 8080,
         proxy: {
-            '/api': {
-                target: 'https://www.imooc.com',
+            '/mi': {
+                target: 'http://mi.rzi2016.online/mi/', //API服务器的地址
                 changeOrigin: true,
                 pathRewrite: {
-                    '/api': ''
+                    '^/mi': ''
                 }
-            }
-        }
+            },
+        },
     }
 }

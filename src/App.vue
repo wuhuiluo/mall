@@ -8,12 +8,6 @@ export default {
     return {
       age: 30
     }
-  },
-
-  mounted() {
-     this.$axios.get('/mock/user/user.json').then(res => {
-       console.log(res)
-     })
   }
 }
 </script>
