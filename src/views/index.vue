@@ -1,10 +1,16 @@
 <template>
-    <div class="index"></div>
+    <div class="index">
+        <service-bar />
+    </div>
 </template>
 
 
 <script>
 import { getCateList } from '../network/request.js'
+import 'swiper/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
+import ServiceBar from '../components/ServiceBar'
 export default {
     data() {
         return {
@@ -22,6 +28,10 @@ export default {
            console.log(data)
 
         }
+    },
+
+    components: {
+        ServiceBar,
     }
 }
 </script>
