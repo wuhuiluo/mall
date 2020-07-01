@@ -45,15 +45,17 @@
       </div>
       <div class="ads-box">
         <a href="javascript:;" v-for="(item,index) in adsList" :key="index">
-          <img :src="item.img" alt />
+          <img v-lazy="item.img" alt />
         </a>
       </div>
       <div class="banner">
         <a href="javascript:;">
-          <img src="/imgs/banner-1.png" />
+          <img v-lazy="'/imgs/banner-1.png'" />
         </a>
       </div>
-      <div class="h-container">
+    </div>
+    <div class="h-container">
+      <div class="product w">
         <div v-for="(item,index) in productList" :key="index" class="content">
           <!-- 标题 -->
           <h2>{{item.cateType}}</h2>
@@ -63,12 +65,21 @@
             <div class="h-banner">
               <div v-for="(items,index) in item.advert" :key="index">
                 <a href="javascript:;">
-                  <img :src="items">
+                  <img v-lazy="items" />
                 </a>
               </div>
             </div>
             <div class="list-box">
-
+              <div class="tab-pro" :key="index" v-for="(tabPro,index) in item.content">
+                <div class="h-p-item" v-for="(proDetail,index) in tabPro.children" :key="index">
+                  <a href="javascript:;">
+                    <img v-lazy="proDetail.img" />
+                    <h4 class="h-pro-title">{{proDetail.name}}</h4>
+                    <h4 class="h-pro-desc">{{proDetail.brief}}</h4>
+                    <h4 class="h-pro-price">{{proDetail.price}}</h4>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -165,9 +176,9 @@ export default {
     },
 
     async _getHomeProductList() {
-      const data = await getHomeProductList()
-      this.productList = data
-      console.log(this.productList)
+      const data = await getHomeProductList();
+      this.productList = data;
+      console.log(this.productList);
     },
 
     selectItem(index) {
@@ -279,6 +290,106 @@ export default {
       }
       .swiper-button-prev {
         left: 254px;
+      }
+    }
+  }
+  .h-container {
+    background: #f5f5f5;
+    box-sizing: border-box;
+    padding-top: 20px;
+    .product {
+      .content {
+        height: 686px;
+        h2 {
+          display: inline-block;
+          font-size: 22px;
+          line-height: 60px;
+        }
+      }
+      .p-wrapper {
+        display: flex;
+        height: 614px;
+        .h-banner {
+          display: flex;
+          flex-direction: column;
+          width: 234px;
+          height: 614px;
+          div {
+            a {
+              display: block;
+              img {
+                width: 234px;
+              }
+            }
+            transition: all 0.8s;
+            &:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+            &:nth-child(1) {
+              margin-bottom: 8px;
+            }
+          }
+        }
+        .list-box {
+          width: 992px;
+          height: 614px;
+          margin-left: 15px;
+          overflow: hidden;
+          .tab-pro {
+            @include flex();
+            flex-wrap: wrap;
+            .h-p-item {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              width: 234px;
+              height: 300px;
+              box-sizing: border-box;
+              border: 1px solid #fff;
+              background-color: #fff;
+              text-align: center;
+              transition: all 0.8s;
+              &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+              }
+              &:nth-child(-n + 4) {
+                margin-bottom: 14px;
+              }
+              img {
+                width: 160px;
+                height: 160px;
+                margin: 18px 0;
+              }
+              .h-pro-title {
+                display: block;
+                margin: 0 auto;
+                width: 67px;
+                height: 24px;
+                text-align: center;
+                line-height: 24px;
+                font-size: 14px;
+                background-color: #7ECF68;
+                color: #fff;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+              .h-pro-desc {
+                height: 18px;
+                font-size: 12px;
+                color: #b0b0b0;
+                margin-bottom: 8px;
+                margin-top: 10px;
+              }
+              .h-pro-price {
+                color: #ff6700;
+                font-size: 16px;
+              }
+            }
+          }
+        }
       }
     }
   }
