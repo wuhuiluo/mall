@@ -8,27 +8,51 @@
     <div class="container">
       <div class="login-box">
         <div class="title">登陆页面</div>
-        <input placeholder="账号" type="text" v-model="account" />
-        <input placeholder="密码" type="password" v-model="password" />
+        <input placeholder="账号" type="text" v-model="loginForm.username" />
+        <input placeholder="密码" type="password" v-model="loginForm.password" />
         <div class="denglu">
-          <el-button round type="primary">登陆</el-button>
+          <el-button round type="primary" @click="login">登陆</el-button>
         </div>
       </div>
     </div>
     <div class="footer">
-        <h1>吴辉洛的小米商城</h1>
+      <h1>吴辉洛的小米商城</h1>
     </div>
   </div>
 </template>
 
 
 <script>
+import { postLogin, getUserInfo } from "../network/request.js";
+import { mapActions } from 'vuex';
 export default {
   data() {
     return {
-      account: "",
-      password: ""
+      loginForm: {
+        username: "rzcoding",
+        password: "rzcoding"
+      },
+      userId: ""
     };
+  },
+
+  methods: {
+    ...mapActions(['saveUserName']),
+
+    async login() {
+      await postLogin(this.loginForm);
+      const data = await getUserInfo();
+      console.log(data);
+      this.$cookies.set('userId', data.userId, 60 * 60 * 24 * 7)
+      this.$message({
+        message: "恭喜你,登陆成功",
+        type: "success",
+        center: true,
+        duration: 1000
+      });
+      this.saveUserName(data.username)
+      this.$router.push("/index");
+    }
   }
 };
 </script>

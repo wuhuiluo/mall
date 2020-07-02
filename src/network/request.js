@@ -69,3 +69,15 @@ export function getBanners() {
 export function getHomeProductList() {
   return axios.get('homeProduct')
 }
+// 登陆
+export function postLogin(param) {
+  return axios.post('login', param)
+}
+// 获取用户详情
+export function getUserInfo() {
+  return axios.get(`user`)
+}
+// 退出
+export function postLogout() {
+  return axios.post('logout')
+}

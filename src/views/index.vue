@@ -23,7 +23,7 @@
           class="table-pane"
         >
           <div class="tab-pane-items" v-for="(item,index) in curCateList" :key="index">
-            <a href>
+            <a :href="`/product/${item.id}`">
               <img :src="item.img" alt />
               {{item.name}}
             </a>
@@ -32,7 +32,7 @@
         <!-- 轮播图 -->
         <swiper :options="swiperOptions">
           <swiper-slide v-for="(item,index) in bannerList" :key="index">
-            <a href="javascritp:;">
+            <a :href="`/product/${item.productId}`">
               <img :src="item.img" alt />
             </a>
           </swiper-slide>
@@ -178,7 +178,7 @@ export default {
     async _getHomeProductList() {
       const data = await getHomeProductList();
       this.productList = data;
-      console.log(this.productList);
+      // console.log(this.productList);
     },
 
     selectItem(index) {

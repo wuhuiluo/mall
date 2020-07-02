@@ -1,16 +1,31 @@
 <template>
-    <router-view/>
+  <router-view />
 </template>
 <script>
-import storage from './storage/index'
+import { getUserInfo } from '../src/network/request'
+import storage from "./storage/index";
+import { mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      age: 30
+  mounted() {
+    if (this.$cookies.get("userId")) {
+      this._getUserInfo();
+    }
+  },
+
+  methods: {
+    ...mapActions(['saveUserName']),
+    
+    async _getUserInfo() {
+      const res = await getUserInfo()
+      if(res) {
+        this.saveUserName(res.username)
+      }else {
+        this.$cookies.remove('userId')
+      }
     }
   }
-}
+};
 </script>
 <style>
-@import './assets/scss/reset.scss';
+@import "./assets/scss/reset.scss";
 </style>

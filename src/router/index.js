@@ -14,6 +14,11 @@ Vue.use(Router)
          path: '/index',
          name: 'index',
          component: () => import('../views/index.vue')
+       },
+       {
+         path: '/product/:id',
+         name: 'product',
+         component: () => import('../views/product.vue')
        }
     ]
   },

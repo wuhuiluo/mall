@@ -15,20 +15,26 @@
 
         <ul class="nav-right">
           <li>
-            <a href="javascript:;">
+            <a v-if="!username" href="/login">
               登陆
               <span class="line">|</span>
             </a>
           </li>
           <li>
-            <a href="javascript:;">
-              登陆
+            <a v-if="username" href="javascript:;">
+              {{username}}
+              <span class="line">|</span>
+            </a>
+          </li>
+          <li>
+            <a @click="logOut" v-if="username" href="javascript:;">
+              退出
               <span class="line">|</span>
             </a>
           </li>
           <li>
             <a href="javascript:;">
-              登陆
+              我的订单
               <span class="line">|</span>
             </a>
           </li>
@@ -62,7 +68,7 @@
             <div class="goods-info">
               <ul class="product-list w">
                 <li v-for="(item,index) in curProductList" :key="index" class="product">
-                  <a href="#">
+                  <a :href="`/product/${item.productId}`">
                     <div class="pro-img">
                       <img :src="item.img" />
                       <h4 class="pro-name">{{item.name}}</h4>
@@ -84,7 +90,8 @@
 
 
 <script>
-import { getNavItem } from "../network/request.js";
+import { mapState,mapActions } from "vuex";
+import { getNavItem, postLogout } from "../network/request.js";
 export default {
   data() {
     return {
@@ -117,11 +124,20 @@ export default {
     };
   },
 
+  computed: {
+    ...mapState(['username'])
+  },
+
   created() {
     this._getProductList();
   },
+  
+  mounted() {
+    console.log(this.curProductList)
+  },
 
   methods: {
+    ...mapActions(['saveUserName']),
     // 获取商品列表
     async _getProductList() {
       const data = await getNavItem();
@@ -137,11 +153,22 @@ export default {
 
     selectProduct(e) {
       this.allProductList.forEach(item => {
-        if(e.target.innerText.trim() === item.cateName) {
-          this.curProductList = item.children
-          return false
+        if (e.target.innerText.trim() === item.cateName) {
+          this.curProductList = item.children;
+          return false;
         }
-      })
+      });
+    },
+
+    async logOut() {
+      await postLogout()
+      this.saveUserName('')
+      this.$message({
+        message: "退出成功",
+        type: "warning",
+        center: true,
+        duration: 1000
+      });
     }
   }
 };
