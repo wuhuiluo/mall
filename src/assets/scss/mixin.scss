@@ -13,3 +13,11 @@
     background: url($img) no-repeat center;
     background-size: $size;
 }
+
+@mixin position($loc: fixed,$top: 0,$left: 0,$w: 100%,$h: 100%) {
+    position: $loc;
+    top: $top;
+    left: $left;
+    width: 100%;
+    height: 100%;
+}

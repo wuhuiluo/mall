@@ -133,7 +133,7 @@ export default {
   },
   
   mounted() {
-    console.log(this.curProductList)
+    // console.log(this.curProductList)
   },
 
   methods: {
@@ -163,6 +163,8 @@ export default {
     async logOut() {
       await postLogout()
       this.saveUserName('')
+      this.$cookies.set("userId",'')
+      this.$router.push('/login')
       this.$message({
         message: "退出成功",
         type: "warning",

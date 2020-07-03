@@ -5,10 +5,10 @@
             <p>小米商城</p>
         </div>
         <div class="footer-link">
-            <a href="wuhuiluo.github.io">github地址</a><span>|</span>
-            <a href="javascript:;">仿网易云播放器</a><span>|</span>
-            <a href="javascript:;">仿网易云播放器</a><span>|</span>
-            <a href="javascript:;">仿网易云播放器</a><span>|</span>
+            <a href="https://wuhuiluo.github.io">博客地址</a><span>|</span>
+            <a href="https://blog.flqin.com/map/">前端体系</a><span>|</span>
+            <a href="https://github.com/wuhuiluo">GITHUB</a><span>|</span>
+            <a href="javascript:;">仿网易云播放器</a>
         </div>
         <div class="copyright">
             CopyRight ©2020

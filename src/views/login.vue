@@ -7,11 +7,12 @@
     </div>
     <div class="container">
       <div class="login-box">
+        <img class="logo" src="/imgs/logo.png">
         <div class="title">登陆页面</div>
         <input placeholder="账号" type="text" v-model="loginForm.username" />
         <input placeholder="密码" type="password" v-model="loginForm.password" />
         <div class="denglu">
-          <el-button round type="primary" @click="login">登陆</el-button>
+          <el-button class="enter" round type="primary" @click="login">登陆</el-button>
         </div>
       </div>
     </div>
@@ -86,7 +87,6 @@ export default {
     background: url("/imgs/login-bg.jpg") no-repeat 50%;
   }
   .login-box {
-    padding-top: 80px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -99,7 +99,15 @@ export default {
     background: #fff;
     box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
     font-family: sans-serif;
+    .logo {
+       width: 96px;
+       height: 76px;
+       z-index: 99;
+       position: absolute;
+       top: -30px;
+    }
     .title {
+      margin-top: 80px;
       height: 40px;
       line-height: 40px;
       font-size: 16px;
@@ -121,6 +129,13 @@ export default {
     }
     input:focus {
       width: 280px;
+    }
+    .denglu {
+      .enter {
+        &:hover {
+          width: 100px;
+        }
+      }
     }
   }
 }

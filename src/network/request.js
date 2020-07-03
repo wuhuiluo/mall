@@ -47,7 +47,7 @@ axios.interceptors.response.use(response => {
   return data;
 }, (err) => {
   NProgress.done();
-  Vue.prototype.$message.error("快滚！快滚！快滚！服务器内部错误，你无法解决！")
+  Vue.prototype.$message.error("服务器垃裤")
   return new Promise(() => {})
   // return Promise.reject(err);
 })

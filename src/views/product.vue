@@ -44,6 +44,22 @@
         </swiper>
         <p class="desc">小米8 AI变焦双摄拍摄</p>
       </div>
+      <div class="item-video">
+        <div class="video-bg" @click="showSlide = true"></div>
+        <div class="video-box">
+          <div class="overlay" v-show="showSlide"></div>
+          <div class="video" :class="{'slide': showSlide}">
+            <i class="el-icon-close" @click="control"></i>
+            <video
+              id="video"
+              src="https://vdept.bdstatic.com/34715967654a345866794a7064713946/6e484b3570596463/540fd31d524e91290372ee7dc715107c829b6d363467f29e31da6c1b66a2f86e280922a35ba790d7eb1781a09f62507d.mp4?auth_key=1593768022-0-0-cadb850ea6fd59195d40ceaf6bdd38d1"
+              muted
+              autoplay
+              controls="controls"
+            ></video>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -56,6 +72,7 @@ import ProductParam from "../components/ProductParam";
 export default {
   data() {
     return {
+      showSlide: false,
       product: {
         name: "小米8"
       },
@@ -75,6 +92,14 @@ export default {
       }
     };
   },
+  
+  methods: {
+     control() {
+        this.showSlide = false
+        let myVideo = document.getElementById('video');
+        myVideo.pause()
+     }
+  },
 
   components: {
     ProductParam,
@@ -86,6 +111,8 @@ export default {
 
 
 <style lang="scss">
+@import "../assets/scss/mixin.scss";
+
 .swiper-container {
   height: 228px;
   img {
@@ -141,6 +168,61 @@ export default {
         color: #333333;
         text-align: center;
         margin-top: 15px;
+      }
+    }
+    .item-video {
+      height: 540px;
+      background-color: #070708;
+      margin-bottom: 76px;
+      color: #fff;
+      .video-bg {
+        background: url("/imgs/product/gallery-1.png") no-repeat center;
+        background-size: cover;
+        width: 1226px;
+        height: 540px;
+        margin: 0 auto 120px;
+        cursor: pointer;
+      }
+      .video-box {
+        .overlay {
+          @include position();
+          background-color: #333;
+          opacity: 0.4;
+          z-index: 10;
+        }
+        .video {
+          width: 1000px;
+          position: fixed;
+          top: -50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 999;
+          height: 536px;
+          opacity: 0;
+          transition: all .6s;
+          &.slide {
+            top: 50%;
+            opacity: 1;
+          }
+          video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; // 覆盖原生组件样式
+            outline: none;
+          }
+          i {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 45px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 12;
+            &:hover {
+              background-color: red;
+            }
+          }
+        }
       }
     }
   }
