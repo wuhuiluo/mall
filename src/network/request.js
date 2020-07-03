@@ -81,3 +81,7 @@ export function getUserInfo() {
 export function postLogout() {
   return axios.post('logout')
 }
+// 获取产品详情
+export function getProductDetail(id) {
+  return axios.get(`product/${id}`)
+}

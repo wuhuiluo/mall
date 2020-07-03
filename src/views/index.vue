@@ -72,7 +72,7 @@
             <div class="list-box">
               <div class="tab-pro" :key="index" v-for="(tabPro,index) in item.content">
                 <div class="h-p-item" v-for="(proDetail,index) in tabPro.children" :key="index">
-                  <a href="javascript:;">
+                  <a :href="`/detail/${proDetail.productId}`">
                     <img v-lazy="proDetail.img" />
                     <h4 class="h-pro-title">{{proDetail.name}}</h4>
                     <h4 class="h-pro-desc">{{proDetail.brief}}</h4>
