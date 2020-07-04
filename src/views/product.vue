@@ -52,7 +52,7 @@
             <i class="el-icon-close" @click="control"></i>
             <video
               id="video"
-              src="https://vdept.bdstatic.com/34715967654a345866794a7064713946/6e484b3570596463/540fd31d524e91290372ee7dc715107c829b6d363467f29e31da6c1b66a2f86e280922a35ba790d7eb1781a09f62507d.mp4?auth_key=1593768022-0-0-cadb850ea6fd59195d40ceaf6bdd38d1"
+              src="https://vdept.bdstatic.com/6c6165665943353548677a64546b3456/31694a4b6e455556/323dbc111f2935f577c349ebf21975587308ca4fb06fef4a95fbc2e110155bdf7563cb9cf135ca6fe358291595673fef.mp4?auth_key=1593849301-0-0-de33007c0ad750f7be1f2726d3485389"
               muted
               autoplay
               controls="controls"
