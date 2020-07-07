@@ -1,5 +1,4 @@
 # mall
-<<<<<<< HEAD
 
 ## Project setup
 ```
