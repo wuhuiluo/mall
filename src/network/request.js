@@ -85,3 +85,11 @@ export function postLogout() {
 export function getProductDetail(id) {
   return axios.get(`product/${id}`)
 }
+// 添加购物车
+export function addCart(goodsId) {
+  return axios.post(`cart?goodsId=${goodsId}`)
+}
+// 获取购物车列表
+export function getCartList(param) {
+  return axios.get(`cart/list`, { params: param })
+}

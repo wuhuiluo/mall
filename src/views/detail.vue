@@ -38,10 +38,12 @@
               <h2>选择{{item.attrName}}</h2>
               <ul class="product-attrs">
                 <li
-                  v-for="(item,index) in item.attrVals"
+                  :class="{'checked': attrIds.includes(items.propId)}"
+                  @click="selectAttr(item.attrName,items.propId)"
+                  v-for="(items,index) in item.attrVals"
                   :key="index"
                   class="product-attr"
-                >{{item.attrVal}}</li>
+                >{{items.attrVal}}</li>
               </ul>
             </div>
           </div>
@@ -54,11 +56,20 @@
             <div class="phone-total">总计: {{goodsInfo.price}} 元</div>
           </div>
           <div class="btn-group">
-            <a href="javascript:;" class="btn-huge">加入购物车</a>
+            <a href="javascript:;" @click="addCart" class="btn-huge">加入购物车</a>
           </div>
         </div>
       </div>
     </div>
+    <div class="price-info">
+      <div class="container w">
+        <h2>价格说明</h2>
+        <div class="desc">
+          <img src="/imgs/detail/item-price.jpeg" />
+        </div>
+      </div>
+    </div>
+    <service-bar />
   </div>
 </template>
 
@@ -66,8 +77,9 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import ServiceBar from '../components/ServiceBar'
 import ProductParam from "../components/ProductParam";
-import { getProductDetail } from "../network/request";
+import { getProductDetail,addCart } from "../network/request";
 export default {
   data() {
     return {
@@ -90,7 +102,7 @@ export default {
       productInfo: {},
       goodsInfo: {},
       goodsAttrs: [],
-      attrsIds: []
+      attrIds: []
     };
   },
 
@@ -107,14 +119,81 @@ export default {
       console.log(this.productInfo);
       this.goodsAttrs = this.goodsInfo.goodsAttrs;
       this.goodsAttrs.forEach(e => {
-        this.attrsIds.push(e.attrId);
+        this.attrIds.push(e.attrId);
       });
-      console.log(this.attrsIds);
+    },
+    
+
+    selectAttr(attrName, propId) {
+      // console.log(propId);
+      // console.log(this.attrIds);
+      // console.log(this.attrIds.includes(propId));
+      if (this.illegalClick || this.attrIds.includes(propId)) {
+        return false;
+      }
+      // 构建新商品属性
+      let newGoodsAttrs = [];
+      this.goodsAttrs.forEach(e => {
+        let goodsAttr = {};
+        goodsAttr.attrName = e.attrName;
+        goodsAttr.attrId = e.attrId;
+        if (e.attrName === attrName) {
+          goodsAttr.attrId = propId;
+        }
+        newGoodsAttrs.push(goodsAttr);
+      });
+      // console.log(this.productInfo);
+      // console.log(newGoodsAttrs.length)
+      // console.log(newGoodsAttrs)
+      let notMatch = true;
+      this.productInfo.goodsList.forEach(goods => {
+        // 遍历匹配商品属性
+        let cnt = 0;
+        goods.goodsAttrs.forEach(attr => {
+          newGoodsAttrs.forEach(newAttr => {
+            if (
+              attr.attrName === newAttr.attrName &&
+              attr.attrId === newAttr.attrId
+            ) {
+              cnt = cnt + 1;
+            }
+          });
+        });
+
+        // 匹配成功替换具体商品
+        if (cnt === newGoodsAttrs.length) {
+          this.goodsInfo = goods;
+          this.goodsAttrs = this.goodsInfo.goodsAttrs;
+          this.attrIds.splice(0, this.attrIds.length);
+          this.goodsAttrs.forEach(e => {
+            this.attrIds.push(e.attrId);
+          });
+          notMatch = false;
+          return false;
+        }
+      });
+      if (notMatch) {
+        this.illegalClick = true;
+        this.$message.warning({
+          message: "没货了",
+          center: true,
+          duration: 800,
+          onClose: () => {
+            this.illegalClick = false;
+          }
+        });
+      }
+    },
+
+    async addCart() {
+      const data = await addCart(this.goodsInfo.goodsId)
+      this.$router.push('/cart')
     }
   },
 
   components: {
     ProductParam,
+    ServiceBar,
     Swiper,
     SwiperSlide
   }
@@ -220,6 +299,10 @@ export default {
                 border: 1px solid #e5e5e5;
                 box-sizing: border-box;
                 text-align: center;
+                &.checked {
+                  border: 1px solid #ff6600;
+                  color: #ff6600;
+                }
               }
             }
           }
@@ -262,6 +345,16 @@ export default {
         height: 100%;
       }
     }
+  }
+}
+.price-info {
+  height: 340px;
+  background: #f3f3f3;
+  h2 {
+    font-size: 24px;
+    color: #333333;
+    padding-top: 38px;
+    margin-bottom: 30px;
   }
 }
 </style>
